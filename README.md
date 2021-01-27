@@ -23,7 +23,7 @@ slider.render();
 ```
 
 ## Options
-Before rendering, you can also change the duration of the auto slide.
+Before rendering, you can also change the transition duration.
 ```javascript
 slider.options.transitionDuration = 2;
 ```
