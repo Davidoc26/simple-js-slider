@@ -14,9 +14,9 @@ class Slider {
                 alt: "next"
             }
         },
-        transitionDuration: 0.5,
+        transitionDuration: 1,
         autoSlide: false,
-        autoSlideDuration: 3000,
+        autoSlideFrequency: 3,
     };
     offset = 0;
     slideIndex = 1;
@@ -39,8 +39,8 @@ class Slider {
         this.options.buttons.next.size = next;
     }
 
-    setAutoSlideDuration(sec) {
-        this.options.autoSlideDuration = sec * 1000;
+    getAutoSlideFrequency(sec) {
+        return this.options.autoSlideFrequency * 1000;
     }
 
     createButtons() {
@@ -93,7 +93,6 @@ class Slider {
         // append div's to inner
         wrapper.append(prevDiv);
         wrapper.append(nextDiv);
-
     }
 
     nextSlide() {
@@ -178,14 +177,15 @@ class Slider {
             this.inner.append(img);
         });
         // set styles
-        this.inner.style.display = "flex";
-        this.inner.style.transition = `all ${this.options.transitionDuration}s`;
-        this.wrapper.style.overflow = "hidden";
-        this.wrapper.style.maxWidth = `${this.width}px`;
-        this.wrapper.style.maxHeight = `${this.height}px`;
-        this.inner.style.width = 100 * this.imgs.length + "%";
+        this.inner.style.cssText = `
+        display: flex; 
+        transition: all ${this.options.transitionDuration}s;
+        width: ${100 * this.imgs.length}%`;
+        this.wrapper.style.cssText = `
+        overflow: hidden;
+        max-width: ${this.width}px;
+        max-height: ${this.height}px;`;
         this.parent.style.position = "relative";
-
         this.imgs.forEach(img => {
             img.style.width = window.getComputedStyle(this.inner).width.slice(0, window.getComputedStyle(this.inner).width.length - 2) / this.imgs.length + "px";
         });
@@ -194,7 +194,7 @@ class Slider {
         if (this.options.autoSlide) {
             let autoSlide = setInterval(() => {
                 this.nextSlide();
-            }, this.options.autoSlideDuration);
+            }, this.getAutoSlideFrequency());
         }
         window.addEventListener("resize", () => {
             this.refresh()
