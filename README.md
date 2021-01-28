@@ -23,7 +23,8 @@ slider.render();
 ```
 
 ## Options
-Before rendering, you can also change the transition duration.
+Before rendering, you can also change the transition duration and auto slide frequency (in seconds).
 ```javascript
 slider.options.transitionDuration = 2;
+slider.options.autoSlideFrequency = 2;
 ```
